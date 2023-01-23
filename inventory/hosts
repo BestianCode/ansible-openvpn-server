@@ -1,9 +1,8 @@
 [vpn]
-vpn01 ansible_host=65.109.160.214 ansible_user=admin ansible_port=65432
-# VPN host N1
-#vpn01 ansible_host=vpn01.mydomain.org ansible_user=admin ansible_port=22
-# VPN host N2
-#vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
+# VPN host before update - root/22
+#vpn01 ansible_host=49.12.6.108 ansible_user=root ansible_port=22
+# VPN host after update  - admin/65432
+#vpn01 ansible_host=49.12.6.108 ansible_user=admin ansible_port=65432
 
 # For Linux hosts. There are variables for linux VMs
 [lnx:children]

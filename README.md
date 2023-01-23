@@ -1,8 +1,9 @@
 # Easy personal OpenVPN Server with login/password authentication
 
-### Install Ansible
+### Install Ansible, configure ssh and etc...
 
 * You have to know how to do it on your OS or you can look at the google.com :)
+* Also you have to know what is Linux, SSH, and how networks work :)
 
 ### Prepare your virtual server
 
@@ -56,6 +57,9 @@ vpn01 ansible_host=vpn01.mydomain.org ansible_user=root ansible_port=22
 vpn01 ansible_host=vpn01.mydomain.org ansible_user=admin ansible_port=65432
 ```
 
----
+### How to manage users and config
 
-__REMOVE SSH KEY__
+* If you correctly set all variables and hosts in `inventory/hosts`, configured and rebooted the server, you can create users and VPN config
+* `./user-add.sh vpn01` - __vpn01__ is the name of the server from `inventory/hosts`. Enter the username and password.
+* `./user-del.sh vpn01` - Enter a user name, and the user will be deleted.
+* `./user-vpn-config.sh vpn01` - Config will be generated and written into the root folder of the project with the name `user-vpn.conf`. Use this config with your OpenVPN client.

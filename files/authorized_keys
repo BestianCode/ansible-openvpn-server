@@ -1,7 +1,9 @@
 # ====================
 # Managed by Ansible
 # ====================
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWZd9qIeeBaiBYnTLfRk0cyY82uj3Ubh/mEW+SX7/MgzQW4oBgKeX0f8r7621bgsQBVrEjAWaYb415EPrIZGZh7+qkFL2s25XCKQ2i9W0+m320+AeuLZnUg4CZ2bObVM8K9DQdi3D4fiF2mnf6ciE+xandfqyYASabnlFWmOQ8v2XIceeSQdXy0VgPA6MNik74M1FTdQggbjdkZqcZr9hDCheZ2P+gI8Q/lPiJIgYoN46ItYvG2tWhHxJqX6BveM0RLBFDokofHmO9kXbY3SacoVtXc1k+lf7kbYC+TZiG8rtUpDff9X5lKP2zh+KJGNkghrmf8xJquCnz4FzsRpwlFTvZJ7vr1itpM3C9pRQ0sg66hnko4fQlcYfus+zHR+D6hFHOLoX1Pe0SsVIo6mXv523stOV1m07JMOJipmEpf+PX/NPCVXlQNzEC1bK0t6GvBa/tjmqG8eEBa0xQ9DT1gWLOWMO4kLOPphPOeAA8enmkm2owkBJ2GmgLkUCC1B+BlG7kMBwXL4VLdgzcqHo5Uah24KDS595wsxhY/lHuayMDqs3hVQR9CfUQ0w4QUiI3VHcof6C8b/d1pEl5F3uN5O07FZThEkmOX69DNODzFIdv9C/ZLtNxovj1yWmJoGh+8VCkQguuxM8nTjlQyB7fL8dIpASkMuheIHRYy+huXw== admin@local
+ssh-rsa AAAA...uXw== admin@local
+ssh-rsa AAAA...xXw== neighbor@local
+ssh-rsa AAAA...yXw== frau@local
 # ====================
 # Managed by Ansible
 # ====================
