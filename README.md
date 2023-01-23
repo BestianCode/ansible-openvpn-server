@@ -34,7 +34,16 @@ vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
 * `templates/server.conf.j2` - OpenVPN Server config
 * `files/crt/` - There are keys and certificates for OpenVPN Server. Please, use `EasyRSA` tool to create your own ca, DH, and server certs and keys. It is not safe to use these sample files from this repo! Use them only for testing purposes.
 
-#### Important !!!
+#### How to run
+
+* `ansible-playbook -i inventory/ playbook.yml --diff --limit vpn --extra-vars='reboot=yes'`
+* `--extra-vars='reboot=yes'` - Reboot the host after the playbook will be finished the first time
+* `--ask-become-pass` - Ask for sudo password before run
+* `--limit vpn` - Limit hosts only to group VPN. Just for example, does not make sense exactly in this repo :)
+* `ansible-playbook -i inventory/ playbook.yml --diff` - Just normal run withour reboot.
+
+---
+### Important !!!
 
 __**fatal: [vpn01]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 123.45.67.8 port 22: Connection refused", "unreachable": true}**__
 
@@ -47,6 +56,6 @@ vpn01 ansible_host=vpn01.mydomain.org ansible_user=root ansible_port=22
 vpn01 ansible_host=vpn01.mydomain.org ansible_user=admin ansible_port=65432
 ```
 
-----------
+---
 
 __REMOVE SSH KEY__

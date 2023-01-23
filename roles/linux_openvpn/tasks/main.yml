@@ -1,5 +1,5 @@
 - name: Create /etc/openvpn/tmp
-  file: dest=/etc/openvpn/tmp state=directory owner=root group={{rootGroup}} mode=0700
+  file: dest=/etc/openvpn/tmp state=directory owner=nobody group=nogroup mode=0775
 
 - name: Update apt cache
   apt:

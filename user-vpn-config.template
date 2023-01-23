@@ -1,0 +1,15 @@
+client
+dev tun
+proto udp
+
+remote {{SERVER_ADDR}} 1194
+
+resolv-retry infinite
+
+persist-key
+persist-tun
+
+cipher AES-256-CBC
+
+auth-user-pass
+
