@@ -21,7 +21,7 @@ vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
 #### Ansible Groups
 
 * Keep the group `lnx` with member `vpn`, because it used for macro variables for __Linux OS__
-* Put group with your server to group `rus` (Russia) in case it is placed inside of Russia, or into `etc` (External) if the server is outside of Russia
+* Put group with your server to group `rus` (Russia) in case it is run inside of Russia, or into `ext` (External) if the server is outside of Russia
 
 #### Ansible Variables
 
