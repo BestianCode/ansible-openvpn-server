@@ -26,8 +26,8 @@ vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
 #### Ansible Variables
 
 * `groups_vars/all`:
-  1. `managerName` - Ansible will create this user with UID `managerUID` for accessing the server with ssh. This action is needed if you access your server with user `root`. Ssh access for user `root` will be blocked. If you already have a user, just specify the user name, groups, UID, and GID in the variables. It will not be recreated. By default I set `65432`
-  2. `sshPort` - I recommend not using default port `22` due to bots permanently trying to connect to this port and it causes a lot of trash in security/auth logs. Better to use something else.
+  1. `managerName` - Ansible will create this user with UID `managerUID` for accessing the server with ssh. This action is needed if you access your server with user `root`. Ssh access for user `root` will be blocked. If you already have a user, just specify the user name, groups, UID, and GID in the variables. It will not be recreated.
+  2. `sshPort` - I recommend not using default port `22` due to bots permanently trying to connect to this port and it causes a lot of trash in security/auth logs. Better to use something else. By default I set `65432`
 
 #### Ansible files
 
