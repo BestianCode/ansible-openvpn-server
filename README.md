@@ -1,3 +1,5 @@
+# Easy personal OpenVPN Server with login/password authentication
+
 ### Install Ansible
 
 * You have to know how to do it on your OS or you can look at the google.com :)
@@ -29,6 +31,8 @@ vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
 #### Ansible files
 
 * Put your PUBLIC ssh key into the file `files/authorized_keys`
+* `templates/server.conf.j2` - OpenVPN Server config
+* `files/crt/` - There are keys and certificates for OpenVPN Server. Please, use `EasyRSA` tool to create your own ca, DH, and server certs and keys. It is not safe to use these sample files from this repo! Use them only for testing purposes.
 
 #### Important !!!
 
