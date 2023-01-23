@@ -1,0 +1,56 @@
+- name: Create /etc/openvpn/tmp
+  file: dest=/etc/openvpn/tmp state=directory owner=root group={{rootGroup}} mode=0700
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install packages
+  apt:
+    name: ['openvpn','easy-rsa','iptables']
+    state: present
+    update_cache: yes
+
+- name: Deploy templates
+  copy:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+    owner: "{{item.owner}}"
+    group: "{{item.group}}"
+    decrypt: "{{item.decrypt}}"
+  with_items:
+    - { src: "crt/ca.crt",      dest: "/etc/openvpn/ca.crt",          mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "crt/dh.pem",      dest: "/etc/openvpn/dh.pem",          mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "crt/server.crt",  dest: "/etc/openvpn/server.crt",      mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "crt/server.key",  dest: "/etc/openvpn/server.key",      mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "sysctl.conf",     dest: "/etc/sysctl.d/77-custom.conf", mode: "0644", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+
+- name: Activate sysctl settings
+  shell: sysctl -p /etc/sysctl.d/77-custom.conf
+
+- name: Deploy templates
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+    owner: "{{item.owner}}"
+    group: "{{item.group}}"
+    decrypt: "{{item.decrypt}}"
+  with_items:
+    - { src: "server.conf.j2", dest: "/etc/openvpn/openvpn.conf", mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "iptables.sh.j2", dest: "/root/sbin/iptables.sh",  mode: "0755", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+
+- name: Enable and restart openvpn
+  service:
+    name: openvpn
+    enabled: yes
+    state: restarted
+
+- name: Configure iptables
+  shell: /root/sbin/iptables.sh
+  changed_when: false
+  register: ipT
+
+- debug:
+    var: ipT.stdout_lines

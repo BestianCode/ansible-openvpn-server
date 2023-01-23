@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ipt4="/usr/sbin/iptables"
+int=`route -n | grep -E "0.0.0.0.*0.0.0.0" | awk '{ print $8 }'`
+
+${ipt4} -F
+${ipt4} -t nat -F
+${ipt4} -t mangle -F
+${ipt4} -X
+
+${ipt4} -t nat -A POSTROUTING -s {{ vpn_network }}/{{ vpn_bmask }} -d 0.0.0.0/0 -o ${int} -j MASQUERADE

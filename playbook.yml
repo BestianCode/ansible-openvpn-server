@@ -15,19 +15,19 @@
   roles:
     - linux_apparmor
 
-#- hosts:
-#    - vpn
-#  become: true
-#  tags:
-#    - vpn
-#  roles:
-#    - linux_openvpn
-#
-#- hosts:
-#    - all
-#  become: true
-#  tags:
-#    - reboot
-#  roles:
-#    - reboot
+- hosts:
+    - vpn
+  become: true
+  tags:
+    - vpn
+  roles:
+    - linux_openvpn
+
+- hosts:
+    - all
+  become: true
+  tags:
+    - reboot
+  roles:
+    - reboot
 

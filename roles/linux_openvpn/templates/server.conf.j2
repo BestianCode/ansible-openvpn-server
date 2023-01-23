@@ -1,0 +1,64 @@
+port 1194
+proto udp
+dev tun
+
+ca ca.crt
+cert server.crt
+key server.key  # This file should be kept secret
+
+dh dh.pem
+
+server {{ vpn_network }} {{ vpn_mask }}
+
+push "route 0.0.0.0 0.0.0.0"
+push "route {{ unbound_int_ip }} {{ unbound_int_mask }}"
+
+{% for x in dns_servers | regex_findall('\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b') %}
+push "route {{ x }} 255.255.255.255"
+{% endfor %}
+
+push "redirect-gateway def1"
+push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS {{ unbound_int_ip }}"
+{% for x in dns_servers | regex_findall('\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b') %}
+#push "dhcp-option DNS {{ x }}"
+{% endfor %}
+
+keepalive 10 120
+
+cipher AES-256-CBC
+
+user nobody
+group nogroup
+
+persist-key
+persist-tun
+
+status /var/log/openvpn/openvpn.status
+
+log         /var/log/openvpn/openvpn.log
+log-append  /var/log/openvpn/openvpn.log
+
+verb 3
+
+explicit-exit-notify 1
+
+# Allow multiconnections
+duplicate-cn
+
+comp-lzo
+
+tmp-dir "/etc/openvpn/tmp/"
+
+# --- --- --- --- --- --- --- --- --- ---
+#
+# For login/password auth:
+#
+# Just delete the strings below for using certificate-based auth:
+#
+# --- --- --- --- --- --- --- --- --- ---
+
+verify-client-cert none
+username-as-common-name
+
+plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/pam.d/login
