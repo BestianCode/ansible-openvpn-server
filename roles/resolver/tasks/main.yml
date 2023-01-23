@@ -1,0 +1,77 @@
+- name: Create {{mainETC}}/unbound/unbound.conf.d
+  file: dest={{mainETC}}/unbound/unbound.conf.d state=directory owner=root group={{rootGroup}} mode=0755
+
+- name: Install packages
+  become: true
+  ansible.builtin.package:
+    name: ['unbound']
+    state: present
+    autoremove: yes
+
+- name: Install bind-tools for BSD
+  become: true
+  ansible.builtin.package:
+    name: ['bind-tools']
+    state: present
+    autoremove: yes
+  when: ansible_os_family == 'FreeBSD'
+
+- name: /etc/resolv.conf - remove immutable flag / LNX
+  shell: chattr -i /etc/resolv.conf
+  ignore_errors: true
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: /etc/resolv.conf - remove immutable flag / BSD
+  shell: chflags noschg /etc/resolv.conf
+  ignore_errors: true
+  when: ansible_os_family == 'FreeBSD'
+
+- name: Deploy templates
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+    owner: "{{item.owner}}"
+    group: "{{item.group}}"
+    decrypt: "{{item.decrypt}}"
+  with_items:
+    - { src: "resolv.conf.j2",  dest: "/etc/resolv.conf",                               mode: "0644", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "unbound.conf.j2", dest: "{{mainETC}}/unbound/unbound.conf",               mode: "0644", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "listen.conf.j2",  dest: "{{mainETC}}/unbound/unbound.conf.d/listen.conf", mode: "0644", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+
+- name: /etc/resolv.conf - set immutable flag / LNX
+  shell: chattr +i /etc/resolv.conf
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: /etc/resolv.conf - set immutable flag / BSD
+  shell: chflags schg /etc/resolv.conf
+  when: ansible_os_family == 'FreeBSD'
+
+- name: Deploy additional linux templates
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+    mode: "{{item.mode}}"
+    owner: "{{item.owner}}"
+    group: "{{item.group}}"
+    decrypt: "{{item.decrypt}}"
+  with_items:
+    - { src: "int.unbound.j2", dest: "/etc/network/interfaces.d/unbound", mode: "0644", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: Create a new unbound interface / LNX
+  shell: bash -c 'ifup {{unbound_int}}'
+  ignore_errors: true
+  changed_when: false
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: Create a new unbound interface / BSD
+  shell: bash -c "if [ `ifconfig | grep \"{{unbound_int}}:\" | wc -l ` -lt 1 ]; then ifconfig {{unbound_int}} create; ifconfig {{unbound_int}} inet {{ unbound_int_ip }} netmask {{ unbound_int_mask }}; fi"
+  ignore_errors: true
+  changed_when: false
+  when: ansible_os_family == 'FreeBSD'
+
+- name: Restart unbound
+  ansible.builtin.service:
+    name: unbound
+    state: restarted

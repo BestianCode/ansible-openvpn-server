@@ -1,0 +1,17 @@
+[vpn]
+vpn01 ansible_host=65.109.160.214 ansible_user=admin ansible_port=65432
+# VPN host N1
+#vpn01 ansible_host=vpn01.mydomain.org ansible_user=admin ansible_port=22
+# VPN host N2
+#vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
+
+# For Linux hosts. There are variables for linux VMs
+[lnx:children]
+vpn
+
+# Group for server inside of Russia to set Yandex DNS servers
+[rus:children]
+
+# Group for server outside of Russia to set Google DNS servers
+[ext:children]
+vpn

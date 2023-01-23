@@ -1,0 +1,10 @@
+- name: Restart server
+  command: /sbin/shutdown -r +1
+  async: 0
+  poll: 0
+  ignore_errors: true
+  when: reboot is defined and reboot=="yes"
+
+- name: Service massage
+  debug:
+    msg: "You can use --extra-vars='reboot=yes' to reboot server in case of initial setup"

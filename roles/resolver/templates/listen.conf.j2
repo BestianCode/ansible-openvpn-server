@@ -1,0 +1,10 @@
+server:
+    interface: 127.0.0.1
+    interface: {{ unbound_int_ip }}
+    access-control: 127.0.0.0/8 allow
+{% if vpn_network is defined and vpn_bmask is defined %}
+    access-control: {{ vpn_network }}/{{ vpn_bmask }} allow
+{% endif %}
+{% if int4subnet is defined and int4mask is defined %}
+    access-control: {{ int4subnet }}.0/{{ int4bmask }} allow
+{% endif %}

@@ -1,0 +1,33 @@
+- hosts:
+    - all
+  become: true
+  tags:
+    - basic
+  roles:
+    - init
+    - resolver
+
+- hosts:
+    - lnx
+  become: true
+  tags:
+    - basic
+  roles:
+    - linux_apparmor
+
+#- hosts:
+#    - vpn
+#  become: true
+#  tags:
+#    - vpn
+#  roles:
+#    - linux_openvpn
+#
+#- hosts:
+#    - all
+#  become: true
+#  tags:
+#    - reboot
+#  roles:
+#    - reboot
+

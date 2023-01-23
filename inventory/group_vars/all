@@ -1,0 +1,9 @@
+unbound_int_ip: 192.168.100.254
+unbound_int_mask: 255.255.255.255
+
+managerName: admin
+managerGroup: admin
+managerGID: 1001
+managerUID: 1001
+
+sshPort: 65432

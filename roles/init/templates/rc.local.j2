@@ -1,0 +1,19 @@
+#!/bin/bash
+# ====================
+# Managed by Ansible
+# ====================
+
+
+{% if ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu' %}
+if [ -f /root/sbin/iptables.sh ]; then
+    /root/sbin/iptables.sh > /var/log/rc.local.log
+fi
+
+if [ -f /root/sbin/network.sh ]; then
+    /root/sbin/network.sh >> /var/log/rc.local.log
+fi
+{% endif %}
+
+# ====================
+# Managed by Ansible
+# ====================

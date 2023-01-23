@@ -1,0 +1,10 @@
+ansible_python_interpreter: /usr/bin/python3
+rootGroup: root
+
+unbound_int: lo:10
+
+usersHomeFolder: /home
+usersDefShell: /bin/bash
+
+mainETC: /etc
+sshService: ssh
