@@ -19,7 +19,7 @@
 
 - name: Install additional linux packages
   ansible.builtin.package:
-    name: ['locales-all','aptitude','telnet','traceroute','dnsutils','ethtool','dsniff','apt-transport-https','ca-certificates','software-properties-common','man','gnupg-agent','dstat','net-tools','bsd-mailx']
+    name: ['locales-all','aptitude','telnet','traceroute','dnsutils','ethtool','dsniff','apt-transport-https','ca-certificates','software-properties-common','man','gnupg-agent','dstat','net-tools','bsd-mailx','unattended-upgrades']
     state: present
     autoremove: yes
   when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'

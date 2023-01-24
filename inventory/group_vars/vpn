@@ -1,3 +1,5 @@
 vpn_network: 192.168.101.0
 vpn_bmask: 24
 vpn_mask: 255.255.255.0
+
+openvpnServiceName: openvpn

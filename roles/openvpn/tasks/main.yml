@@ -34,12 +34,12 @@
     group: "{{item.group}}"
     decrypt: "{{item.decrypt}}"
   with_items:
-    - { src: "server.conf.j2", dest: "/etc/openvpn/openvpn.conf", mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
+    - { src: "server.conf.j2", dest: "/etc/openvpn/{{openvpnServiceName}}.conf", mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
     - { src: "iptables.sh.j2", dest: "/root/sbin/iptables.sh",  mode: "0755", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
 
-- name: Enable and restart openvpn@openvpn
+- name: Enable and restart openvpn@{{openvpnServiceName}}
   service:
-    name: openvpn@openvpn
+    name: openvpn@{{openvpnServiceName}}
     enabled: yes
     state: restarted
 
