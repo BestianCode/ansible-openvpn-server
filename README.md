@@ -37,11 +37,14 @@ vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
 
 #### How to run
 
-* `ansible-playbook -i inventory/ playbook.yml --diff --limit vpn --extra-vars='reboot=yes'`
+* `ansible-playbook -i inventory/ playbook.yml --diff --limit vpn --tags basic,auth,vpn --extra-vars='reboot=yes'`
 * `--extra-vars='reboot=yes'` - Reboot the host after the playbook will be finished the first time
 * `--ask-become-pass` - Ask for sudo password before run
-* `--limit vpn` - Limit hosts only to group VPN. Just for example, does not make any sense exactly in this small repo :)
 * `ansible-playbook -i inventory/ playbook.yml --diff` - Just normal run without reboot.
+
+* __Or just use the script__: `./playbook.sh`
+
+* If you don't want to reconfigure ssh and user access on your VM, exclude tag auth from ansible command line: `ansible-playbook -i inventory/ playbook.yml --diff --limit vpn --tags basic,vpn --extra-vars='reboot=yes'`
 
 ---
 ### Important !!!
