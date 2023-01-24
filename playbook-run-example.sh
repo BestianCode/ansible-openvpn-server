@@ -4,7 +4,7 @@ set -e
 
 echo
 echo
-echo "!!! Dont forget to add your PUBLIC ssh key into files/authorized_keys !!!"
+echo "!!! Don't forget to add your PUBLIC ssh key into files/authorized_keys !!!"
 echo "!!! Otherwise, you will lose access to the host !!!"
 echo
 echo "!!! Look at README.md before run !!!"

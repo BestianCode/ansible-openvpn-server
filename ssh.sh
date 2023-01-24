@@ -17,4 +17,4 @@ ip=$(cat ${invFile} | grep -E "^${vHost}.*ansible_host" | cut -d " " -f 2 | cut 
 login=$(cat ${invFile} | grep -E "^${vHost}.*ansible_host" | cut -d " " -f 3 | cut -d "=" -f 2)
 port=$(cat ${invFile} | grep -E "^${vHost}.*ansible_host" | cut -d " " -f 4 | cut -d "=" -f 2)
 
-ssh -p ${port} ${login}@${ip}
+ssh -v -p ${port} ${login}@${ip}
