@@ -67,6 +67,4 @@ vpn01 ansible_host=vpn01.mydomain.org ansible_user=admin ansible_port=65432
 * `./user-del.sh vpn01` - Enter a user name, and the user will be deleted.
 * `./user-vpn-config.sh vpn01` - Config will be generated and written into the root folder of the project with the name `user-vpn.conf`. Use this config with your OpenVPN client.
 * `./ssh.sh vpn01` - Just connect to the VM
-* `playbook.sh` - Just run ansible with reboot of the VM
-
-
+* `./playbook-run-example.sh` - Just run ansible with reboot of the VM
