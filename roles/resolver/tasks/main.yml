@@ -75,3 +75,10 @@
   ansible.builtin.service:
     name: unbound
     state: restarted
+
+- name: Check unbound status
+  shell: service unbound status
+  register: sOut
+
+- debug:
+    var: sOut.stdout_lines

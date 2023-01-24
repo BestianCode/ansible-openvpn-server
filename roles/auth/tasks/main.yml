@@ -67,3 +67,10 @@
   ansible.builtin.service:
     name: "{{sshService}}"
     state: restarted
+
+- name: Check ssh server status
+  shell: service "{{sshService}}" status
+  register: sOut
+
+- debug:
+    var: sOut.stdout_lines

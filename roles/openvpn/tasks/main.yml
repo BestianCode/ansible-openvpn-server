@@ -61,3 +61,10 @@
 - name: Service massage
   debug:
     msg: "You can use --extra-vars='openvpn_restart=yes' to restart OpenVPN service"
+
+- name: Check openvpn@{{openvpnServiceName}} status
+  shell: service openvpn@{{openvpnServiceName}} status
+  register: sOut
+
+- debug:
+    var: sOut.stdout_lines
