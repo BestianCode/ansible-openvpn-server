@@ -1,0 +1,36 @@
+- name: Stop exim4
+  shell: systemctl stop exim4
+  ignore_errors: true
+  changed_when: false
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: Disable exim4
+  shell: systemctl disable exim4
+  ignore_errors: true
+  changed_when: false
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: Disable and stop apparmor service
+  become: true
+  systemd:
+    name: apparmor
+    enabled: no
+    masked: yes
+    state: stopped
+  tags: apparmor
+  ignore_errors: true
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: Purge packages
+  become: true
+  apt:
+    name: ['apparmor']
+    state: absent
+    update_cache: yes
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'
+
+- name: Clean apt
+  apt:
+    autoremove: yes
+    purge: yes
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'Ubuntu'

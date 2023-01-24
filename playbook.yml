@@ -5,29 +5,32 @@
     - basic
   roles:
     - init
+
+- hosts:
+    - all
+  become: true
+  tags:
+    - auth
+  roles:
+    - auth
+
+- hosts:
+    - vpn
+  become: true
+  tags:
+    - vpn
+  roles:
     - resolver
-
-- hosts:
-    - lnx
-  become: true
-  tags:
-    - basic
-  roles:
-    - linux_apparmor
-
-- hosts:
-    - vpn
-  become: true
-  tags:
-    - vpn
-  roles:
-    - linux_openvpn
+    - openvpn
 
 - hosts:
     - all
   become: true
   tags:
     - reboot
+    - basic
+    - vpn
+    - auth
   roles:
+    - remove
     - reboot
-

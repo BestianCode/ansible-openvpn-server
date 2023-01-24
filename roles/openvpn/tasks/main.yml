@@ -1,10 +1,6 @@
 - name: Create /etc/openvpn/tmp
   file: dest=/etc/openvpn/tmp state=directory owner=nobody group=nogroup mode=0775
 
-- name: Update apt cache
-  apt:
-    update_cache: yes
-
 - name: Install packages
   apt:
     name: ['openvpn','easy-rsa','iptables']
@@ -41,9 +37,9 @@
     - { src: "server.conf.j2", dest: "/etc/openvpn/openvpn.conf", mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
     - { src: "iptables.sh.j2", dest: "/root/sbin/iptables.sh",  mode: "0755", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
 
-- name: Enable and restart openvpn
+- name: Enable and restart openvpn@openvpn
   service:
-    name: openvpn
+    name: openvpn@openvpn
     enabled: yes
     state: restarted
 
