@@ -37,12 +37,6 @@
     - { src: "server.conf.j2", dest: "/etc/openvpn/{{openvpnServiceName}}.conf", mode: "0600", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
     - { src: "iptables.sh.j2", dest: "/root/sbin/iptables.sh",  mode: "0755", owner: "root", group: "{{rootGroup}}", decrypt: "no" }
 
-- name: Enable and restart openvpn@{{openvpnServiceName}}
-  service:
-    name: openvpn@{{openvpnServiceName}}
-    enabled: yes
-    state: restarted
-
 - name: Configure iptables
   shell: /root/sbin/iptables.sh
   changed_when: false
@@ -50,3 +44,20 @@
 
 - debug:
     var: ipT.stdout_lines
+
+- name: Enable and start openvpn@{{openvpnServiceName}}
+  service:
+    name: openvpn@{{openvpnServiceName}}
+    enabled: yes
+    state: started
+
+- name: Restart openvpn@{{openvpnServiceName}}
+  service:
+    name: openvpn@{{openvpnServiceName}}
+    enabled: yes
+    state: restarted
+  when: openvpn_restart is defined and openvpn_restart=="yes"
+
+- name: Service massage
+  debug:
+    msg: "You can use --extra-vars='openvpn_restart=yes' to restart OpenVPN service"

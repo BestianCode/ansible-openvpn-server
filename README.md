@@ -40,6 +40,7 @@ vpn02 ansible_host=12.243.116.23 ansible_user=admin ansible_port=22
 * `ansible-playbook -i inventory/ playbook.yml --diff --limit vpn --tags basic,auth,vpn --extra-vars='reboot=yes'`
 * `--extra-vars='reboot=yes'` - Reboot the host after the playbook will be finished the first time
 * `--ask-become-pass` - Ask for sudo password before run
+* `--extra-vars='openvpn_restart=yes'` - restart OpenVPN service
 * `ansible-playbook -i inventory/ playbook.yml --diff` - Just normal run without reboot.
 
 * __Or just use the script__: `./playbook.sh`
