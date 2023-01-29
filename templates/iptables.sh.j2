@@ -8,4 +8,18 @@ ${ipt4} -t nat -F
 ${ipt4} -t mangle -F
 ${ipt4} -X
 
+{% if always_allowed_hosts is defined %}
+{% for x in always_allowed_hosts %}
+${ipt4} -j ACCEPT -A INPUT -s {{ x }} -i ${int}
+{% endfor %}
+{% endif %}
+
+${ipt4} -j ACCEPT -A INPUT -4 -p tcp -i ${int} --dport {{ sshPort }}     -m conntrack --ctstate NEW,ESTABLISHED
+${ipt4} -j ACCEPT -A INPUT -4 -p udp -i ${int} --dport {{ openVPNport }}
+
+${ipt4} -j ACCEPT -A INPUT -4 -p tcp -i ${int} -m conntrack --ctstate ESTABLISHED,RELATED
+${ipt4} -j DROP   -A INPUT -4 -p tcp -i ${int} -m conntrack --ctstate NEW
+
+### NAT
+
 ${ipt4} -t nat -A POSTROUTING -s {{ vpn_network }}/{{ vpn_bmask }} -d 0.0.0.0/0 -o ${int} -j MASQUERADE

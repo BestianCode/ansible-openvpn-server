@@ -7,3 +7,8 @@ managerGID: 1001
 managerUID: 1001
 
 sshPort: 65432
+openVPNport: 1194
+
+always_allowed_hosts:
+  - 1.2.3.4
+  - 5.6.7.8
