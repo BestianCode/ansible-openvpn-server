@@ -15,11 +15,15 @@ ${ipt4} -j ACCEPT -A INPUT -s {{ x }} -i ${int}
 {% endif %}
 
 ${ipt4} -j ACCEPT -A INPUT -4 -p tcp -i ${int} --dport {{ sshPort }}     -m conntrack --ctstate NEW,ESTABLISHED
+{% if openVPNport is defined %}
 ${ipt4} -j ACCEPT -A INPUT -4 -p udp -i ${int} --dport {{ openVPNport }}
+{% endif %}
 
 ${ipt4} -j ACCEPT -A INPUT -4 -p tcp -i ${int} -m conntrack --ctstate ESTABLISHED,RELATED
 ${ipt4} -j DROP   -A INPUT -4 -p tcp -i ${int} -m conntrack --ctstate NEW
 
 ### NAT
 
+{% if openVPNport is defined %}
 ${ipt4} -t nat -A POSTROUTING -s {{ vpn_network }}/{{ vpn_bmask }} -d 0.0.0.0/0 -o ${int} -j MASQUERADE
+{% endif %}
